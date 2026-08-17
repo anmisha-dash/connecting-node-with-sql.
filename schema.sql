@@ -1,6 +1,10 @@
+USE delta_app;
+
+DROP TABLE IF EXISTS user;
+
 CREATE TABLE user (
- id VARCHAR(30) PRIMARY KEY,
- username VARCHAR(50) UNIQUE,
- email VARCHAR(50) UNIQUE not null,
- password VARCHAR(30)
+    id VARCHAR(36) PRIMARY KEY,
+    username VARCHAR(30),
+    email VARCHAR(50),
+    password VARCHAR(30)
 );

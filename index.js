@@ -2,33 +2,35 @@ const { faker } = require('@faker-js/faker');
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-  host : 'localhost',
-  user : 'root',
-  database : 'delta_app',
-  password : 'aj1vy4te'
-}
-);
-//inserting new data
-let q = "INSERT INTO user (id,username,email,password) VALUES ?";
-let users = [[2,"new_user2","new2@gmail.com","abc2"],
-            [3,"new_user3","new3@gamil.com","abc3"]];
-try{
-  connection.query(q,[users],(err,result)=>{
-    if(err){throw err};
-  console.log(result);
-})
-}
-catch(err){
-  console.log(err);
+    host: 'localhost',
+    user: 'root',
+    database: 'delta_app',
+    password: 'aj1vy4te'
+});
+
+let getRandomUser = () => {
+    return [
+        faker.string.uuid(),
+        faker.internet.username(),
+        faker.internet.email(),
+        faker.internet.password()
+    ];
+};
+
+let q = "INSERT INTO user (id, username, email, password) VALUES ?";
+
+let data = [];
+
+for (let i = 1; i <= 100; i++) {
+    data.push(getRandomUser());
 }
 
+connection.query(q, [data], (err, result) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
 
-
-let getRandomUser = ()=> {
-  return {
-    id: faker.string.uuid(),
-    username: faker.internet.username(),
-    email: faker.internet.email(),
-    password: faker.internet.password()
-  };
-}
+    console.log(result);
+    connection.end();
+});
