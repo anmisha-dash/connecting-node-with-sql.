@@ -47,21 +47,16 @@ app.get("/", (req, res) => {
 //show route
 app.get("/user",(req,res)=>{
     let q = `SELECT * FROM user`;
-
-
     connection.query(q, (err, result) => {
         if (err) {
-            console.log(err);
-            
+            console.log(err);         
             res.send("Some error occurred");
             return;
         }
         else{
-            res.send(result);
+            // res.send(result);
+            res.render("showusers.ejs");
         }
-        
-       
-        
     });
 })
 
