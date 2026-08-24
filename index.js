@@ -37,10 +37,33 @@ app.get("/", (req, res) => {
         console.log(result);
         let count = result[0].count;
         // res.send(`Total users: ${result[0].count}`);
+        //home route
         res.render("home.ejs",{count});
         
     });
+
 });
+
+//show route
+app.get("/user",(req,res)=>{
+    let q = `SELECT * FROM user`;
+
+
+    connection.query(q, (err, result) => {
+        if (err) {
+            console.log(err);
+            
+            res.send("Some error occurred");
+            return;
+        }
+        else{
+            res.send(result);
+        }
+        
+       
+        
+    });
+})
 
 app.listen(8080, () => {
     console.log("app is listening");
