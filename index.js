@@ -3,7 +3,10 @@ const mysql = require('mysql2');
 const express = require("express");
 const app = express();
 const path = require("path");
+const methodOverride = require("method-override");
 
+app.use(methodOverride("_method"));
+app.use(express.urlencoded({extended:true}));
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 
@@ -62,8 +65,29 @@ app.get("/user",(req,res)=>{
 // edit route
 app.get("/user/:id/edit",(req,res)=>{
     let {id}=req.params;
-    res.render("edit.ejs");
+    let q = `SELECT * FROM user WHERE id ='${id}'`;
+
+    
+    connection.query(q, (err, result) => {
+        if (err) {
+            console.log(err);         
+            res.send("Some error occurred");
+            return;
+        }
+        else{
+            // res.send(result);
+            let user = result[0];
+            
+            res.render("edit.ejs",{user});
+        }
+    });
+   
 });
+
+//Update route
+app.patch("/user/:id",(req,res)=>{
+    res.send("updated");
+})
 
 app.listen(8080, () => {
     console.log("app is listening");
