@@ -59,6 +59,11 @@ app.get("/user",(req,res)=>{
         }
     });
 })
+// edit route
+app.get("/user/:id/edit",(req,res)=>{
+    let {id}=req.params;
+    res.render("edit.ejs");
+});
 
 app.listen(8080, () => {
     console.log("app is listening");

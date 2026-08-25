@@ -33,7 +33,14 @@
                 <td>
                     <%=user.username%>
                 </td>
+                <td>
+                    <form method="GET" action="/user/<%=user.id%>/edit">
+                    <button>Edit username</button>
+                </td>
+                
+                </form>
             </tr>
+            
             <%}%>
     </table>
 </body>
